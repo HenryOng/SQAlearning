@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <suite name="Suite" parallel="false">
+	<test name="Test">
+		<classes>
+			<class name="testNg.TestingTestNgLifeCycle" />
+			<class name="testNg.CalculatorTestNg" />
+		</classes>
+	</test>
+	<test name="Test1">
+		<parameter name="myName" value="Robert" />
+		<classes>
+			
+			<class name="testNg.ParameterizedTest1" />
+			<class name="testNg.ParamTestWithDataProvider1" />
+		</classes>
+	</test>
+</suite>
+<suite name="Suite" parallel="false">
+	<test name="Test">
+		<classes>
+			<class name="testNg.FruitTest" />
+			<class name="testNg.TestNGSimpleTest" />
+		</classes>
+	</test>
+	<test name="Test2">
+		<classes>
+			<class name="testNg.TestEmployeeDetails" />
+			<class name="testNg.TestingTestNgLifeCycle" />
+		</classes>
+	</test>
+</suite> -->
+<!-- package test -->
+<!-- <suite name="Suite" parallel="false">
+	<test name="Test">
+		<packages>
+			<package name="testNg.*"/>
+		</packages>
+		<package name = "testNg*"/>
+		<exclude name="testNg2"></exclude>
+		</packages>
+	</test>		
+</suite>
+ -->
+    
+ 
+ <!--  Group test simple -->
+<!-- <suite name="Suite1">
+	<test name="test1">
+		<groups>
+			<run>
+				<include name="functest" />
+			</run>
+		</groups>
+		<classes>
+			<class name="GroupTestExample" />
+		</classes>
+	</test>
+</suite> -->
+<!--  Groups of groups -->
+<!-- <suite name="Suite1">
+	<test name="test1">
+		<groups>
+			<define name="all">
+				<include name="functest" />
+				<include name="checkintest" />
+			</define>
+			<run>
+				<include name="all" />
+				<exclude name="checkintest"/>
+			</run>
+		</groups>		
+		<classes>
+			<class name="testNg.GroupTestExample" />
+		</classes>
+	</test>
+</suite> -->
+<!-- exclusion -->
+<!-- <suite name="Suite1">
+	<test name="test1">
+		
+			<groups>
+			<define name="all">
+				<include name="functest" />
+				<include name="checkintest" />
+			</define>
+			<run>
+				<include name="all" />
+				<exclude name="checkintest" />
+			</run>
+		</groups>
+		<classes>
+			<class name="testNg.GroupTestExample" />
+		</classes>
+	</test>
+</suite> -->
+<suite>
+<groups>
+<define name ="Fast and Slow">
+	<include name="FastTest"/>
+	<include name= "SlowTest"/>
+</define>
+<run>
+<include name="Fast and Slow" />
+<exclude name="SlowTest" />
+</run>
+</groups>
+<classes>
+<class name="testNg.GroupTestExample" />
+</classes>
+</test>
+</suite>
+
