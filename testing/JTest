@@ -1,0 +1,62 @@
+package web;
+ 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.AssertJUnit;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+ 
+public class ResetPassword_DataProvider {
+    public static WebDriver driver;
+    public static WebElement element;
+     
+    @BeforeMethod
+    public void setup(){
+        driver = new FirefoxDriver();
+    }
+     
+    @AfterMethod
+    public void teardown(){
+        driver.quit();
+    }
+     
+     @DataProvider(name = "email")
+     public Object[][] createData() {
+      return new Object[][] {
+        {"test1@fake.com"},
+        {"test2@fake.com"},
+        {"test3@fake.com"}
+      };
+     }
+     
+    @Test(dataProvider = "email")
+    public void resetPasswordNegative(String email) throws InterruptedException{
+        String error_message = "Please check your " + email + " inbox for an email from Work.com containing your password reset instructions.";
+        driver.get("http://work.com");
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.findElement(By.cssSelector("a.login")).click();
+        ArrayList<String> tabs2 = new ArrayList<String>(
+                driver.getWindowHandles());
+        driver.switchTo().window(tabs2.get(0));
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.close();
+        driver.switchTo().window(tabs2.get(1));
+        driver.findElement(By.linkText("Forgot Password?")).click();
+ 
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[contains(text(), 'Send me reset instructions')]")));
+        driver.findElement(By.cssSelector("input")).sendKeys(email);
+        driver.findElement(By.cssSelector("button")).click();
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        AssertJUnit.assertTrue(driver.findElement(By.tagName("body")).getText().contains(
+                error_message));       
+    }
+}
